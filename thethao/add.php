@@ -16,10 +16,32 @@ include_once("connect.php");
     $idNoiDung=$_POST["idNoiDung"];
     $namRaDoi=$_POST["namRaDoi"];
 
-    
+    $filename = $hinhAnh["name"];
+    if($isCheck){
+      $filename=time().$filename;
+      $uploads = "uploads/".$filename;
+      if(move_uploaded_file($hinhAnh["tmp_name"],$uploads)){
+         $sql="INSERT INTO thethao(tenTheThao, hinhAnh, maTheThao, idNoiDung, namRaDoi)
+          VALUES ('$tenTheThao','$filename','$maTheThao','$idNoiDung','$namRaDoi')";
+          $result=$conn->query($sql);
+          if($result){
+            header('Location: index.php');
+          }
+      }
+    }
  }
 
-
+ $sql="SELECT*FROM noidung";
+ $result=$conn->query($sql);
+ if($result){
+     $listnd=$result->fetchAll(PDO::FETCH_ASSOC);
+     if($listnd){
+         foreach($listnd as $item){
+             $option.='<option value="'.$item["id"].'">'.$item["tenNoiDung"].'</option>';
+ 
+         }
+     }
+ }
 ?>
 
 <form action="add.php" method="post" enctype="multipart/form-data">
@@ -30,8 +52,8 @@ include_once("connect.php");
 <label for="">Mã thể thao</label>
 <input type="text" name="maTheThao" id=""><br>
 <select name="idNoiDung" id="">
-
-</select>
+<?= $option ?>
+</select><br>
 <label for="">Năm ra đời</label>
 <input type="text" name="namRaDoi" id=""><br>
 <input type="submit" name="submit" id="">
