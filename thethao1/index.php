@@ -26,7 +26,7 @@ if($result){
 }
 
 ?>
-<button><a href="add.php">Yêu THỦY</a></button>
+<button><a href="add.php">Thêm Mới</a></button>
 <table border="1px">
     <thead>
         
