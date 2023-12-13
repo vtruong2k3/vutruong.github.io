@@ -1,5 +1,11 @@
 <?php
 include_once("connect.php");
+if(isset($_COOKIE["username"])){
+    echo "hello".$_COOKIE["username"];
+    echo '<button><a href="logout.php">Đăng xuất</a></button>';
+}else{
+    echo '<button><a href="login.php">Đăng nhập</a></button>';
+}
 $hang='';
 $sql="SELECT thethao.id, tenTheThao,hinhAnh,maTheThao,namRaDoi,noidung.tenNoiDung
         FROM thethao INNER JOIN noidung ON thethao.idNoiDung=noidung.id
@@ -38,5 +44,6 @@ if($result){
     </thead>
     <tbody>
         <?= $hang ?>
+        
     </tbody>
 </table>
